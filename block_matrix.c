@@ -6,35 +6,42 @@ void main()
 	int N=500;
 	int a[N][N],b[N][N],c[N][N];
 	int i,j,k,jj,kk,temp;
-	int s = 100;
+	int s=2;
 
   double start = clock();
 	for (i=0; i<N; i++)
     for (j=0; j<N; j++)
-  		a[i][j]= rand();	
+  		a[i][j]= i;	
 
   for (i=0; i<N; i++)
     for (j=0; j<N; j++)
-      b[i][j]= rand();
+      b[i][j]= j;
 
-  for(jj=0;jj<N;jj+= s)
+  for (i=0; i<(N/s); i++)
   {
-    for(kk=0;kk<N;kk+= s)
+    for (j=0; j<N; j++)
     {
-      for(i=0;i<N;i++)
+      c[i][j] = 0;
+      for(k=0; k<N; k++)
       {
-        for(j = jj; j<((jj+s)>N?N:(jj+s)); j++)
-        {
-          temp = 0;
-          for(k = kk; k<((kk+s)>N?N:(kk+s)); k++)
-          {
-            temp += a[i][k]*b[k][j];
-          }
-          c[i][j] += temp;
-        }
+        c[i][j] += a[i][k]*b[k][j];
       }
     }
   }
+
+  for (i=(N/s); i<N; i++)
+  {
+    for (j=0; j<N; j++)
+    {
+      c[i][j] = 0;
+      for(k=0; k<N; k++)
+      {
+        c[i][j] += a[i][k]*b[k][j];
+      }
+    }
+  }
+
+  
   double end=clock();
 
   printf("\n Matrix C\n");
